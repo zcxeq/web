@@ -116,6 +116,7 @@ function useDashboardData(reloadKey: number) {
 
   useEffect(() => {
     let alive = true;
+    setError(null);
     const p = `/players/${ID}`;
     const load = <K extends keyof Data>(key: K, path: string) =>
       getJson<Data[K]>(path)
@@ -571,12 +572,18 @@ const Weekly = ({ lean }: { lean?: LeanMatch[] }) => {
   const pad = 28;
   const bw = (W - pad * 2) / WEEKS;
   const y = (wr: number) => pad + (1 - wr / 100) * (H - pad * 2);
-  const pts = weeks
-    .map((w, i) =>
-      w.games ? `${pad + bw * i + bw / 2},${y(pct(w.wins, w.games))}` : null,
-    )
-    .filter(Boolean)
-    .join(" ");
+  // Линию рвём на неделях без игр: каждый отрезок — подряд идущие недели с играми
+  const segments: string[][] = [];
+  let current: string[] = [];
+  weeks.forEach((w, i) => {
+    if (w.games) {
+      current.push(`${pad + bw * i + bw / 2},${y(pct(w.wins, w.games))}`);
+    } else if (current.length) {
+      segments.push(current);
+      current = [];
+    }
+  });
+  if (current.length) segments.push(current);
   return (
     <S.Card>
       <S.CardTitle>Прогресс по неделям</S.CardTitle>
@@ -625,7 +632,15 @@ const Weekly = ({ lean }: { lean?: LeanMatch[] }) => {
             </g>
           );
         })}
-        <polyline points={pts} fill="none" stroke={S.C.green} strokeWidth={2.5} />
+        {segments.map((seg, i) => (
+          <polyline
+            key={i}
+            points={seg.join(" ")}
+            fill="none"
+            stroke={S.C.green}
+            strokeWidth={2.5}
+          />
+        ))}
         {weeks.map((w, i) =>
           w.games ? (
             <circle
@@ -647,17 +662,29 @@ const Weekly = ({ lean }: { lean?: LeanMatch[] }) => {
 const Dashboard = () => {
   const [reloadKey, setReloadKey] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [refreshError, setRefreshError] = useState<string | null>(null);
   const { data, error } = useDashboardData(reloadKey);
 
   const refresh = async () => {
     setRefreshing(true);
+    setRefreshError(null);
     try {
-      await fetch(`${config.VITE_API_HOST}/api/players/${ID}/refresh`, {
+      const res = await fetch(`${config.VITE_API_HOST}/api/players/${ID}/refresh`, {
         method: "POST",
       });
+      // fetch не бросает исключение на 4xx/5xx, поэтому статус проверяем сами
+      if (!res.ok) {
+        throw new Error(
+          res.status === 429
+            ? "слишком много запросов, подожди минуту"
+            : `сервер ответил ${res.status}`,
+        );
+      }
       // Серверу нужно немного времени, чтобы подтянуть новые матчи
       await new Promise((r) => setTimeout(r, 4000));
       setReloadKey((k) => k + 1);
+    } catch (e) {
+      setRefreshError(e instanceof Error ? e.message : String(e));
     } finally {
       setRefreshing(false);
     }
@@ -671,6 +698,9 @@ const Dashboard = () => {
           Не удалось загрузить часть данных ({error}). Попробуй обновить страницу
           позже: у бесплатного API есть лимит запросов.
         </S.Error>
+      )}
+      {refreshError && (
+        <S.Error>Не удалось обновить данные: {refreshError}.</S.Error>
       )}
       <ProfileCard
         profile={data.profile}
