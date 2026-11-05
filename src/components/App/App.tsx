@@ -20,7 +20,6 @@ import Request from "../Request/Request";
 import Scenarios from "../Scenarios/Scenarios";
 import Search from "../Search/Search";
 import Teams from "../Teams/Teams";
-import config from "../../config";
 import Spinner from "../Spinner/Spinner";
 import Players from "../Players/Players";
 import Heroes from "../Heroes/Heroes";
@@ -139,16 +138,6 @@ const StyledBodyDiv = styled.div`
   }
 `;
 
-const AdBannerDiv = styled.div`
-  text-align: center;
-  margin-bottom: 5px;
-
-  img {
-    margin-top: 10px;
-    max-width: 100%;
-  }
-`;
-
 declare let window: Window & { adsbygoogle: any };
 
 const App = (props: AppProps) => {
@@ -189,8 +178,6 @@ const App = (props: AppProps) => {
   React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-
-  const includeAds = !["/", "/api-keys", "/status"].includes(location.pathname);
 
   return (
     <ThemeProvider theme={darkTheme}>

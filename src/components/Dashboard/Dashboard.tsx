@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
 import { heroes } from "dotaconstants";
 
 import config from "../../config";
@@ -524,7 +523,7 @@ const Activity = ({ lean }: { lean?: LeanMatch[] }) => {
           ))}
         </S.Heat>
       </S.HeatWrap>
-      <S.Tiles style={{ marginTop: 16 }}>
+      <S.Tiles style={{ marginTop: 16, gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}>
         {buckets.map((b) => {
           const wr = pct(b.wins, b.games);
           return (
@@ -685,12 +684,12 @@ const Dashboard = () => {
         <S.Col>
           <RecentMatches recent={data.recent} />
           <Weekly lean={data.lean} />
-          <Activity lean={data.lean} />
         </S.Col>
         <S.Col>
           <TopHeroes all={data.heroesAll} recent180={data.heroes180} />
           <Matchups all={data.heroesAll} />
           <Friends peers={data.peers} />
+          <Activity lean={data.lean} />
         </S.Col>
       </S.Grid>
     </S.Page>

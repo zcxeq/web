@@ -400,12 +400,9 @@ export const Segmented = styled.div`
 
 export const TwoCols = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
+  /* Две колонки, пока каждой хватает 220px, иначе одна под другой */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 20px;
 `;
 
 const miniRowCss = css`
@@ -449,9 +446,9 @@ export const HeatWrap = styled.div`
 
 export const Heat = styled.div`
   display: grid;
-  grid-template-columns: 28px repeat(24, minmax(14px, 1fr));
-  gap: 3px;
-  min-width: 420px;
+  grid-template-columns: 24px repeat(24, minmax(0, 1fr));
+  gap: 2px;
+  min-width: 320px;
 `;
 
 export const HeatCell = styled.div`
