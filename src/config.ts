@@ -6,4 +6,6 @@ export default {
     import.meta.env.VITE_IMAGE_CDN || "https://cdn.cloudflare.steamstatic.com",
   VITE_ENABLE_RIVALRY: import.meta.env.VITE_ENABLE_RIVALRY,
   VITE_ENABLE_GOSUAI: import.meta.env.VITE_ENABLE_GOSUAI,
+  // Мой аккаунт: его профиль открывается на главной
+  MY_ACCOUNT_ID: import.meta.env.VITE_MY_ACCOUNT_ID || "380637483",
 };

@@ -12,7 +12,7 @@ import Distributions from "../Distributions/Distributions";
 import Footer from "../Footer/Footer";
 import FourOhFour from "../FourOhFour/FourOhFour";
 import Header from "../Header/Header";
-import Home from "../Home/Home";
+import Dashboard from "../Dashboard/Dashboard";
 import Matches from "../Matches/Matches";
 import Player from "../Player/Player";
 import Records from "../Records/Records";
@@ -87,12 +87,7 @@ const StyledDiv = styled.div<AppStylesProps>`
   left: ${(props) => (props.open ? "256px" : "0px")};
   margin-top: 0px;
 
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    ${(props) =>
-      props.location?.pathname === "/"
-        ? `url("/assets/images/home-background.png")`
-        : ""};
+  background-image: none;
   background-position: center top -8px;
   background-repeat: ${(props) =>
     props.location?.pathname === "/" ? "no-repeat" : ""};
@@ -208,7 +203,7 @@ const App = (props: AppProps) => {
           <Header location={location} />
           <StyledBodyDiv {...props}>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Dashboard} />
               <Route exact path="/esports/leagues/:leagueId" component={Esports} />
               <Route exact path="/esports/:view(tournaments|players)?" component={Esports} />
               <Route
@@ -243,22 +238,6 @@ const App = (props: AppProps) => {
               <Route component={FourOhFour} />
             </Switch>
           </StyledBodyDiv>
-          <AdBannerDiv>
-            {includeAds && config.VITE_ENABLE_RIVALRY && (
-              <div style={{ fontSize: "12px" }}>
-                <a href="https://www.rivalry.com/opendota">
-                  <img
-                    src="/assets/images/rivalry-banner.gif"
-                    alt="Logo for Rivalry.com"
-                  />
-                </a>
-                <div>
-                  {strings.home_sponsored_by}{" "}
-                  <a href="https://www.rivalry.com/opendota">Rivalry</a>
-                </div>
-              </div>
-            )}
-          </AdBannerDiv>
           <Footer />
           <Back2Top
             //@ts-expect-error

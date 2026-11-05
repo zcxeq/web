@@ -286,7 +286,7 @@ export const getStrings = () => async (dispatch: Function) => {
     window.localStorage && window.localStorage.getItem("localization");
   const userLang = window.navigator.language;
   const defaultLang = langs[0];
-  const lang = getLang(savedLang) || getLang(userLang) || defaultLang;
+  const lang = getLang(savedLang) || getLang("ru-RU") || getLang(userLang) || defaultLang;
 
   const defData = await import(`../lang/${defaultLang.value}.json`);
   const selData = await import(`../lang/${lang.value}.json`);

@@ -280,16 +280,16 @@ const Header = ({
   }, []);
 
   const navbarPages = [
+    { key: "my_dashboard", to: "/", label: "Мой профиль" },
     {
-      key: "header_request",
-      to: "/request",
-      label: strings.header_request,
+      key: "my_matches",
+      to: `/players/${config.MY_ACCOUNT_ID}/matches`,
+      label: "Мои матчи",
     },
-    { key: "esports", to: "/esports", label: strings.esports_title },
     {
-      key: "header_matches",
-      to: "/matches",
-      label: strings.header_matches,
+      key: "my_heroes",
+      to: `/players/${config.MY_ACCOUNT_ID}/heroes`,
+      label: "Мои герои",
     },
     {
       key: "header_heroes",
@@ -297,29 +297,14 @@ const Header = ({
       label: strings.header_heroes,
     },
     {
-      key: "header_teams",
-      to: "/teams",
-      label: strings.header_teams,
-    },
-    // {
-    //   key: 'header_players',
-    //   to: '/players',
-    //   label: strings.header_players,
-    // },
-    {
-      key: "header_explorer",
-      to: "/explorer",
-      label: strings.header_explorer,
+      key: "header_matches",
+      to: "/matches",
+      label: strings.header_matches,
     },
     {
-      key: "header_combos",
-      to: "/combos",
-      label: strings.combos,
-    },
-    {
-      key: "header_distributions",
-      to: "/distributions",
-      label: strings.header_distributions,
+      key: "header_request",
+      to: "/request",
+      label: strings.header_request,
     },
     {
       key: "header_records",
@@ -327,25 +312,10 @@ const Header = ({
       label: strings.header_records,
     },
     {
-      key: "header_scenarios",
-      to: "/scenarios",
-      label: strings.header_scenarios,
+      key: "header_explorer",
+      to: "/explorer",
+      label: strings.header_explorer,
     },
-    {
-      key: "header_api",
-      to: "/api-keys",
-      label: strings.header_api,
-    },
-    {
-      key: "header_subscribe",
-      to: "/subscribe",
-      label: strings.header_subscribe,
-    },
-    // {
-    //   key: 'header_predictions',
-    //   to: '/predictions',
-    //   label: 'TI Predictions',
-    // },
   ];
 
   const drawerPages = [...navbarPages];
