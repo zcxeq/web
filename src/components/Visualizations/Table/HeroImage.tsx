@@ -110,7 +110,11 @@ const Styled = styled.div`
     flex-direction: column;
     justify-content: center;
     line-height: 1.2;
-    width: 105px;
+    /* Гибкая ширина: длинные имена героев помещаются, совсем длинные ники режутся */
+    width: max-content;
+    min-width: 105px;
+    max-width: 180px;
+    flex-shrink: 0;
     text-align: left;
 
     & > span {
@@ -119,7 +123,8 @@ const Styled = styled.div`
 
       & a {
         display: inline-block;
-        width: 88%;
+        /* Абсолютный предел: процент от гибкой ширины родителя зацикливается */
+        max-width: 160px;
         overflow: hidden;
         text-overflow: ellipsis;
         vertical-align: sub;

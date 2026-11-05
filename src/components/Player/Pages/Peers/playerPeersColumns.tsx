@@ -45,21 +45,8 @@ const winsWith = (strings: Strings) => [
   },
 ];
 
+// Колонки «против» убраны: с партнёрами почти всегда играешь в одной команде, там одни нули
 const restColumns = (strings: Strings) => [
-  {
-    displayName: strings.th_against_games,
-    tooltip: strings.tooltip_played_against,
-    field: "against_games",
-    sortFn: true,
-    relativeBars: true,
-  },
-  {
-    displayName: strings.th_against_win,
-    tooltip: strings.tooltip_win_pct_against,
-    field: "against_win",
-    sortFn: (row: any) => row.against_win / row.against_games,
-    percentBars: true,
-  },
   {
     displayName: strings.th_gpm_with,
     field: "with_gpm_sum",

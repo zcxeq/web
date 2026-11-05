@@ -19,10 +19,11 @@ const StyledGraphArea = styled.div`
   user-select: none;
 `;
 
-const formatXTick = (time: number) => {
-  const date = new Date(time);
-  return `${date.getFullYear()}/${date.getMonth() + 1}`;
-};
+// «дек. 2025» вместо «2025/12»
+const formatXTick = (time: number) =>
+  new Date(time).toLocaleDateString("ru-RU", { month: "short", year: "numeric" });
+
+const toMs = (time: string | number) => new Date(time).getTime();
 
 const formatYTick = (rank: number) => {
   return rankTierToString(rank).split(" ")[0];
@@ -34,7 +35,8 @@ const MMRGraph = ({ columns }: { columns: any[] }) => {
     <StyledGraphArea>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
-          data={columns}
+          // Время в миллисекундах, чтобы ось X была шкалой времени, а не списком точек
+          data={columns.map((c) => ({ ...c, time: toMs(c.time) }))}
           margin={{
             top: 5,
             right: 30,
@@ -42,7 +44,14 @@ const MMRGraph = ({ columns }: { columns: any[] }) => {
             bottom: 5,
           }}
         >
-          <XAxis dataKey="time" tickFormatter={formatXTick} />
+          <XAxis
+            dataKey="time"
+            type="number"
+            scale="time"
+            domain={["dataMin", "dataMax"]}
+            tickCount={6}
+            tickFormatter={formatXTick}
+          />
           <YAxis
             type="number"
             domain={[10, 80]}
@@ -52,7 +61,9 @@ const MMRGraph = ({ columns }: { columns: any[] }) => {
           <Grid />
           <Tooltip
             labelStyle={{ color: "black" }}
-            labelFormatter={(time: number) => new Date(time).toDateString()}
+            labelFormatter={(time: number) =>
+              new Date(time).toLocaleDateString("ru-RU")
+            }
             formatter={rankTierToString}
           />
           <Line

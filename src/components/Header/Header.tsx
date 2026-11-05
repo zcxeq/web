@@ -48,8 +48,10 @@ const TabContainer = styled.div`
   text-align: center;
   position: relative;
   line-height: 1;
+  white-space: nowrap;
 
-  @media only screen and (max-width: 1500px) {
+  /* В личной сборке 7 коротких пунктов — помещаются и на ноутбуке */
+  @media only screen and (max-width: 1100px) {
     display: none;
   }
 `;
@@ -286,11 +288,6 @@ const Header = ({
       key: "header_records",
       to: "/records",
       label: strings.header_records,
-    },
-    {
-      key: "header_explorer",
-      to: "/explorer",
-      label: strings.header_explorer,
     },
   ];
 

@@ -1069,7 +1069,7 @@ export function getColStyle(column: any): React.CSSProperties {
 }
 
 export function getLocalizedWeekdayStrings() {
-  const langCode = window.localStorage.getItem("localization") || "en-US";
+  const langCode = window.localStorage.getItem("localization") || "ru-RU";
   const d = new Date();
   return [...Array(7)].map((_, i) =>
     new Date(d.setDate(d.getDate() - d.getDay() + i)).toLocaleDateString(
@@ -1080,7 +1080,7 @@ export function getLocalizedWeekdayStrings() {
 }
 
 export function getLocalizedMonthStrings() {
-  const langCode = window.localStorage.getItem("localization") || "en-US";
+  const langCode = window.localStorage.getItem("localization") || "ru-RU";
   const d = new Date();
   return [...Array(12)].map((_, i) =>
     new Date(d.setMonth(i)).toLocaleDateString(langCode, { month: "short" }),

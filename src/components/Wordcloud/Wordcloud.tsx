@@ -1,67 +1,47 @@
 import React from "react";
 import wordcloud from "wordcloud";
-import { nanoid } from "nanoid";
 
-const stopWords =
-  "a,am,an,and,are,as,at,be,by,for,from,how,i,im,in,is,it,not,of,on,or,that,the,this,to,was,what,when,where,who,will,with";
+const stopWords = new Set(
+  (
+    "a,am,an,and,are,as,at,be,by,for,from,how,i,im,in,is,it,not,of,on,or,that,the,this,to,was,what,when,where,who,will,with," +
+    "и,в,во,не,на,я,а,что,ты,это,да,нет,ну,с,по,за,к,у,же,то,так,вы,он,она,мы,они,мне,тебе,там,тут,как,все,всё,бы,ли"
+  ).split(","),
+);
 
-function isStopWord(word: string) {
-  const regex = new RegExp(`\\b${word}\\b`, "i");
-  return !(stopWords.search(regex) < 0);
-}
-
-function getBaseLog(x: number, y: number) {
-  return Math.log(x) / Math.log(y);
-}
+// Сколько слов рисуем: если брать все, сотни мелких слов сбиваются в кучку в центре
+const MAX_WORDS = 150;
 
 function updateWordCloud(
   wordCounts: Record<string, number>,
-  cloudDomId: string,
+  canvas: HTMLCanvasElement | null,
 ) {
-  let wordList: [key: string, count: number][] = [];
-  let max = 0;
-  const width = window.innerWidth * 0.8;
+  if (!canvas) return;
 
-  Object.keys(wordCounts).forEach((key) => {
-    if (!isStopWord(key)) {
-      wordList.push([key, wordCounts[key]]);
-      if (wordCounts[key] > max) {
-        max = wordCounts[key];
-      }
-    }
-  });
+  const top = Object.entries(wordCounts)
+    .filter(([word]) => !stopWords.has(word.toLowerCase()))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, MAX_WORDS);
+  if (!top.length) return;
 
-  const maxSize = width / 12;
-  const minSize = 8;
+  const max = top[0][1];
+  const min = top[top.length - 1][1];
+  const maxSize = Math.min(110, canvas.width / 8);
+  const minSize = 12;
 
-  // @howardchung implementation of scaling
-  const scale = maxSize / (Math.log(max) + 1);
-  // var scale = max_size/max;
-  // take the log of each count and scale them up to top_size
-  // use log since words such as "gg" tend to dominate
-  // w[1] = Math.max(w[1]*scale, min_size);
-  wordList = wordList.map((w) => [
-    w[0],
-    Math.max(getBaseLog(w[1], 6) * scale, minSize),
+  // Логарифм, чтобы «gg» не задавил всё остальное; растягиваем на весь диапазон размеров
+  const span = Math.log(max) - Math.log(min) || 1;
+  const wordList = top.map(([word, count]) => [
+    word,
+    minSize + ((Math.log(count) - Math.log(min)) / span) * (maxSize - minSize),
   ]);
-
-  /*
-    //@albertcui implementation of scaling
-    max = max > 1000 ? 1000 : max;
-    var scale = 300/max;
-    //scale the words, min 10, max 400
-    word_list.forEach(function(w){
-      w[1] = Math.min(Math.max(Math.log(w[1])*w[1]*scale, 10), Math.min(Math.log(max)*400, 400));
-    });
-  */
-
-  // sort the list to ensure most frequent words get displayed
-  wordList = wordList.sort((a, b) => b[1] - a[1]);
-  //@ts-expect-error
-  wordcloud(document.getElementById(cloudDomId), {
-    list: wordList,
+  wordcloud(canvas, {
+    list: wordList as [string, number][],
     backgroundColor: "transparent",
     color: "random-light",
+    fontFamily: "Inter, Roboto, sans-serif",
+    gridSize: 6,
+    rotateRatio: 0.2,
+    shrinkToFit: true,
     wait: 1,
   });
 }
@@ -69,23 +49,23 @@ function updateWordCloud(
 type WordcloudProps = { counts: Record<string, number> };
 
 class Wordcloud extends React.Component<WordcloudProps> {
-  id = `a-${nanoid()}`;
+  canvas = React.createRef<HTMLCanvasElement>();
   componentDidMount() {
-    updateWordCloud(this.props.counts, this.id);
+    updateWordCloud(this.props.counts, this.canvas.current);
   }
-  componentDidUpdate(nextProps: WordcloudProps) {
-    updateWordCloud(nextProps.counts, this.id);
+  componentDidUpdate() {
+    updateWordCloud(this.props.counts, this.canvas.current);
   }
 
   render() {
     const width = Math.min(1080, window.innerWidth * 0.75);
-    const height = width * 0.7;
+    const height = Math.round(width * 0.5);
     return (
       <canvas
+        ref={this.canvas}
         width={width}
         height={height}
-        id={this.id}
-        style={{ display: "block", margin: "0 auto" }}
+        style={{ display: "block", margin: "0 auto", maxWidth: "100%" }}
       />
     );
   }

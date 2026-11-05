@@ -275,7 +275,7 @@ class IntroEvent extends StoryEvent {
       game_mode: strings[`game_mode_${this.game_mode}` as keyof Strings],
       date: this.date.toLocaleDateString(
         (window.localStorage && window.localStorage.getItem("localization")) ||
-          "en-US",
+          "ru-RU",
         {
           weekday: "long",
           year: "numeric",

@@ -149,7 +149,13 @@ const TrendGraph = ({ columns, name }: { columns: any[]; name: string }) => {
           axisLine={false}
           tickLine={false}
         >
-          <Label value="" position="insideTopRight" />
+          <Label
+            value="матчи, от старых к новым →"
+            position="insideBottomRight"
+            offset={-2}
+            fill="#B0B0B0"
+            fontSize={12}
+          />
         </XAxis>
         <YAxis
           domain={["auto", "auto"]}

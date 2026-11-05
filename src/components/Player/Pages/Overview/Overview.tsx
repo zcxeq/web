@@ -373,23 +373,23 @@ const filterCounts = (counts: Record<string, any>) => {
 
   return {
     game_mode: {
-      label: "Game Mode",
+      label: "Режим",
       data: countMap.game_mode,
     },
     is_radiant: {
-      label: "Team",
+      label: "Сторона",
       data: countMap.is_radiant,
     },
     region: {
-      label: "Region",
+      label: "Регион",
       data: countMap.region,
     },
     lane_role: {
-      label: "Role",
+      label: "Линия",
       data: countMap.lane_role,
     },
     patch: {
-      label: "Patch",
+      label: "Патч",
       data: countMap.patch,
     },
   };

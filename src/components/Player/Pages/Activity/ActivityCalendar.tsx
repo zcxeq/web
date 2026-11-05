@@ -18,7 +18,7 @@ import {
 } from "./Styled";
 import useStrings from "../../../../hooks/useStrings.hook";
 
-const langCode = window.localStorage.getItem("localization") || "en-US";
+const langCode = window.localStorage.getItem("localization") || "ru-RU";
 const weekDayStrings = getLocalizedWeekdayStrings();
 const monthStrings = getLocalizedMonthStrings();
 

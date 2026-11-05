@@ -68,7 +68,10 @@ class Player extends React.Component<PlayerProps> {
         </div>
         {isPlayerProfilePublic ? (
           <div>
-            <TableFilterForm playerId={playerId} />
+            {/* История рейтинга и ранги героев не зависят от фильтров матчей */}
+            {!["medals", "rankings"].includes(info) && (
+              <TableFilterForm playerId={playerId} />
+            )}
             <Spacer variant="2" />
             {page ? (
               page.content(playerId, match.params, location)
