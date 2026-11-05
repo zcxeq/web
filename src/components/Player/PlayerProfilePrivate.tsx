@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
-import config from "../../config";
 import useStrings from "../../hooks/useStrings.hook";
 
 const Styled = styled.div`
@@ -23,21 +21,15 @@ const Styled = styled.div`
   }
 
   .playerProfilePrivateDescription {
-    margin-bottom: 2%;
-  }
-
-  .signInWithSteamButton {
-    border: solid 1px #ffffff;
-    color: #ffffff;
-    padding: 1% 2%;
+    max-width: 560px;
+    margin: 0 auto 2%;
+    color: rgba(255, 255, 255, 0.6);
   }
 `;
 
+// Вход через Steam работает только на opendota.com, поэтому здесь без кнопки входа
 const PlayerProfilePrivate = () => {
   const strings = useStrings();
-  const handleButtonClick = () => {
-    window.location.href = `${config.VITE_API_HOST}/login`;
-  };
   const playerProfilePrivateTitle = (
     strings.player_profile_private_title || ""
   ).toUpperCase();
@@ -50,11 +42,9 @@ const PlayerProfilePrivate = () => {
           <div>{playerProfilePrivateTitle}</div>
         </div>
         <div className="playerProfilePrivateDescription">
-          {strings.player_profile_private_description}
+          Игрок скрыл статистику. Чтобы она появилась, нужно включить
+          «Показывать данные публичных матчей» в настройках клиента Dota 2.
         </div>
-        <Button className="signInWithSteamButton" onClick={handleButtonClick}>
-          {strings.sign_in_with_steam}
-        </Button>
       </div>
     </Styled>
   );

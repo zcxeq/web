@@ -10,7 +10,6 @@ import {
 import BugReport from "@mui/icons-material/BugReport";
 import MenuIcon from "@mui/icons-material/Menu";
 import Settings from "@mui/icons-material/Settings";
-import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import { Toolbar } from "@mui/material";
 import React, { useCallback, useEffect, useState, useRef } from "react";
@@ -19,7 +18,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import config from "../../config";
-import AccountWidget from "../AccountWidget/AccountWidget";
 import AppLogo from "../App/AppLogo";
 import constants from "../constants";
 import LocalizationMenu from "../Localization/Localization";
@@ -220,12 +218,6 @@ const SearchGroup = () => (
   </VerticalAlignToolbar>
 );
 
-const AccountGroup = () => (
-  <VerticalAlignToolbar>
-    <AccountWidget />
-  </VerticalAlignToolbar>
-);
-
 const ReportBug = () => {
   const strings = useStrings();
   return (
@@ -242,21 +234,6 @@ const ReportBug = () => {
   );
 };
 
-const LogOut = () => {
-  const strings = useStrings();
-  return (
-    <DropdownMenuItem
-      //@ts-expect-error
-      component="a"
-      href={`${config.VITE_API_HOST}/logout`}
-      rel="noopener noreferrer"
-    >
-      <LogoutIcon style={{ marginRight: 32, width: 24, height: 24 }} />
-      {strings.app_logout}
-    </DropdownMenuItem>
-  );
-};
-
 const Header = ({
   location,
   disableSearch,
@@ -268,7 +245,6 @@ const Header = ({
     useState<React.JSXElementConstructor<any> | null>(null);
   const [menuIsOpen, setMenuState] = useState(false);
   const small = useSelector((state: any) => state.browser.greaterThan.small);
-  const user = useSelector((state: any) => state.app.metadata.data.user);
   const strings = useStrings();
 
   useEffect(() => {
@@ -337,11 +313,10 @@ const Header = ({
         >
           {!disableSearch && <SearchGroup />}
           <VerticalAlignDiv>
-            {small && <AccountGroup />}
+            {/* Входа нет: сессия OpenDota живёт только на их домене */}
             <SettingsGroup>
               <LocalizationMenu />
               <ReportBug />
-              {user ? <LogOut /> : null}
             </SettingsGroup>
           </VerticalAlignDiv>
         </div>
@@ -368,30 +343,6 @@ const Header = ({
                   </ListItem>
                 </DrawerLink>
               ))}
-            </List>
-            <List>
-              {user ? (
-                <>
-                  <DrawerLink to={`/players/${user.account_id}`}>
-                    <ListItem onClick={() => setMenuState(false)}>
-                      <ListItemText primary={strings.app_my_profile} />
-                    </ListItem>
-                  </DrawerLink>
-                  {/*@ts-expect-error*/}
-                  <DrawerLink as="a" href={`${config.VITE_API_HOST}/logout`}>
-                    <ListItem onClick={() => setMenuState(false)}>
-                      <ListItemText primary={strings.app_logout} />
-                    </ListItem>
-                  </DrawerLink>
-                </>
-              ) : (
-                //@ts-expect-error*
-                <DrawerLink as="a" href={`${config.VITE_API_HOST}/login`}>
-                  <ListItem onClick={() => setMenuState(false)}>
-                    <ListItemText primary={strings.app_login} />
-                  </ListItem>
-                </DrawerLink>
-              )}
             </List>
           </MenuContent>
         </SwipeableDrawer>
