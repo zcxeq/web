@@ -25,16 +25,6 @@ const avatarMatches = (playerId: string, strings: Strings) => [
   },
 ];
 
-const matchesWith = (strings: Strings) => [
-  {
-    displayName: strings.th_with_games,
-    tooltip: strings.tooltip_played_with,
-    field: "with_games",
-    sortFn: true,
-    relativeBars: true,
-  },
-];
-
 const winsWith = (strings: Strings) => [
   {
     displayName: strings.th_with_win,
@@ -68,9 +58,9 @@ export const playerPeersOverviewColumns = (
   strings: Strings,
 ) => [...avatarMatches(playerId, strings), ...winsWith(strings)];
 
+// «Вместе» не выводим: без колонок «против» это то же число, что и «Игры»
 export const playerPeersColumns = (playerId: string, strings: Strings) => [
   ...avatarMatches(playerId, strings),
-  ...matchesWith(strings),
   ...winsWith(strings),
   ...restColumns(strings),
 ];

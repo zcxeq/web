@@ -4,7 +4,10 @@ import constants from "../../../constants";
 export const Styled = styled.div`
   position: relative;
   text-align: center;
-  padding: 10px;
+  padding: 14px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #121722;
 
   .tt-container {
     white-space: nowrap;

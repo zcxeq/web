@@ -9,7 +9,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { formatGraphValueData, getPercentileColor } from "../../../utility";
+import { formatGraphValueData } from "../../../utility";
+
+// Цвет по винрейту — та же шкала, что на дашборде и в карточках героев
+const getPercentileColor = (wr: number) =>
+  wr >= 0.55 ? "#3ecf8e" : wr >= 0.5 ? "#8fd9b4" : wr >= 0.45 ? "#f2a3aa" : "#f0616d";
 import { StyledTooltip, TooltipLabel, HistogramTooltipDiv } from "./Styled";
 import Grid from "./Grid";
 import useStrings from "../../../hooks/useStrings.hook";
@@ -115,7 +119,7 @@ const HistogramGraph = ({
           const { win, games, x } = entry;
           const percent = win / games;
           const color = getPercentileColor(percent);
-          return <Cell fill={color} stroke={color} strokeWidth="2" key={x} />;
+          return <Cell fill={color} key={x} />;
         })}
       </Bar>
     </BarChart>

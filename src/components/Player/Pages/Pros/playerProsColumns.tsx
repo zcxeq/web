@@ -36,6 +36,9 @@ export default (playerId: string, strings: Strings) => [
     field: "with_win",
     sortFn: (row: any) => row.with_win / row.with_games,
     percentBars: true,
+    // Нет совместных игр — прочерк, а не «0%»
+    displayFn: (row: any, _c: any, _v: any, _i: any, pct: number) =>
+      row.with_games ? pct : "—",
   },
   {
     displayName: strings.th_against_games,
@@ -50,5 +53,7 @@ export default (playerId: string, strings: Strings) => [
     field: "against_win",
     sortFn: (row: any) => row.against_win / row.against_games,
     percentBars: true,
+    displayFn: (row: any, _c: any, _v: any, _i: any, pct: number) =>
+      row.against_games ? pct : "—",
   },
 ];

@@ -6,8 +6,10 @@ import constants from "../../../constants";
 
 const Styled = styled.div`
   position: relative;
-  border: 1px solid rgb(0, 0, 0, 0.12);
-  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background-color: #121722;
+  padding: 6px 0;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
@@ -19,7 +21,7 @@ const Styled = styled.div`
       width: 2px;
       height: 300px;
       position: absolute;
-      background: rgb(39, 39, 58);
+      background: rgba(255, 255, 255, 0.06);
       bottom: -50px;
       right: -13px;
     }
@@ -33,8 +35,10 @@ const Group = styled.div`
 `;
 const GroupLabel = styled.div`
   padding: 8px 0;
-  font-family: ${constants.fontFamilyFuturistic};
-  font-size: ${constants.fontSizeSmall};
+  font: 700 12px Inter, Roboto, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
   text-align: center;
 `;
 const ChartPair = styled.div`

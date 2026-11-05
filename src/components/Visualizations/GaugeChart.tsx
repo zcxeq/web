@@ -36,7 +36,7 @@ const Styled = styled.div<{ percent?: number; meterColor?: string }>`
   }
   .gauge:before {
     border-radius: 5em 5em 0 0;
-    background: #2a2a2a;
+    background: rgba(255, 255, 255, 0.07);
   }
 
   .gauge:after {
@@ -45,7 +45,8 @@ const Styled = styled.div<{ percent?: number; meterColor?: string }>`
     left: 2.5em;
     width: 5em;
     height: 2.5em;
-    background: rgb(33, 34, 44);
+    /* Совпадает с фоном карточки, иначе вылезет кружок */
+    background: #121722;
     border-radius: 2.5em 2.5em 0 0;
   }
 
@@ -144,16 +145,9 @@ const Styled = styled.div<{ percent?: number; meterColor?: string }>`
 
 const computeMeterPercent = (value: number) => 0.005 * value;
 
-const computeMeterColor = (value: number) => {
-  if (value < 20) {
-    return "#1769AA";
-  } else if (value < 40) {
-    return "#0078D4";
-  } else if (value < 80) {
-    return "#149BD7";
-  }
-  return "#50E6FF";
-};
+// Винрейт: зелёный от 50% и выше, красный ниже — как в таблицах
+const computeMeterColor = (value: number) =>
+  value >= 50 ? "#3ecf8e" : "#f0616d";
 
 const GaugeChart = ({
   number,

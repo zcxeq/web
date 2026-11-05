@@ -1,20 +1,28 @@
 import React from "react";
-import constants from "../../constants";
 import { StyledContainer, PercentContainer, TitleContainer } from "./Styled";
+
+// Спокойные полоски вместо «радуги»:
+// - относительные значения (игры, GPM) — ровный акцентный цвет;
+// - проценты (винрейт и т.п.) — зелёный от 50% и выше, красный ниже
+const ACCENT = "rgba(124, 156, 255, 0.65)";
+const GOOD = "rgba(62, 207, 142, 0.85)";
+const BAD = "rgba(240, 97, 109, 0.85)";
 
 const Percent = ({
   percent,
   altValue,
   valEl,
   inverse = false,
+  relative = false,
 }: {
   percent: number;
   altValue?: number;
   valEl?: React.ReactNode;
   inverse?: boolean;
+  relative?: boolean;
 }) => {
-  const from = inverse ? constants.colorGreen : constants.colorRed;
-  const to = inverse ? constants.colorRed : constants.colorGreen;
+  const good = inverse ? percent < 50 : percent >= 50;
+  const color = relative ? ACCENT : good ? GOOD : BAD;
   return (
     <StyledContainer>
       <TitleContainer>
@@ -23,11 +31,8 @@ const Percent = ({
       <PercentContainer>
         <div
           style={{
-            width: `${percent}%`,
-            // Interpolating in hsl matches what abcolor's gradient did, and
-            // color-mix resolves custom properties so the colors can stay in
-            // constants instead of being hardcoded here.
-            backgroundColor: `color-mix(in hsl, ${to} ${percent}%, ${from})`,
+            width: `${Math.min(100, Math.max(0, percent))}%`,
+            backgroundColor: color,
           }}
         />
       </PercentContainer>

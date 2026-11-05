@@ -35,11 +35,11 @@ const SummaryContainer = styled(Container)`
   width: 100%;
 
   & ul {
-    border: 1px solid rgb(0, 0, 0, 0.12);
-    border-radius: 2px;
-    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    background-color: #121722;
     margin: 0;
-    padding-left: 5px;
+    padding: 14px 16px 4px;
 
     & li {
       list-style: none;
@@ -51,6 +51,8 @@ const SummaryContainer = styled(Container)`
         margin: 0;
         padding: 0;
         font-size: 24px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
       }
 
       & span {

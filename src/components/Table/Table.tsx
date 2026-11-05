@@ -349,6 +349,7 @@ class Table extends React.Component<TableProps, TableState> {
                               percent={barPercentValue}
                               altValue={altValue}
                               inverse={invertBarColor}
+                              relative={Boolean(relativeBars)}
                             />
                           );
                         } else if (displayFn) {

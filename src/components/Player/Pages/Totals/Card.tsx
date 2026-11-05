@@ -57,29 +57,41 @@ const Wrapper = styled.div`
   }
 `;
 
+// Плитка как на дашборде: мелкая подпись сверху, крупное число под ней
 const Box = styled.div`
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.35);
-  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #121722;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: rgba(124, 156, 255, 0.4);
+  }
 `;
 
 const Header = styled.div`
-  background: rgba(0, 0, 0, 0.15);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  line-height: 1;
-  padding: 16px 12px;
-  text-align: center;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  font: 600 11px/1.3 Inter, Roboto, sans-serif;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  min-height: 28px;
 `;
 
 const Value = styled.div`
-  font-size: 12px;
-  line-height: 1;
-  padding: 16px 12px;
-  text-align: center;
+  margin-top: 6px;
+  font: 800 22px/1.15 Inter, Roboto, sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.small {
+    font-size: 16px;
+  }
 `;
 
 const Card = ({ total }: { total: { field: string; sum: number } }) => {
@@ -88,10 +100,10 @@ const Card = ({ total }: { total: { field: string; sum: number } }) => {
     <Wrapper>
       <Box>
         <Header>{strings[`heading_${total.field}` as keyof Strings]}</Header>
-        <Value>
+        <Value className={total.field === "duration" ? "small" : ""}>
           {total.field === "duration"
             ? formatDurationString(total.sum, strings)
-            : Math.floor(total.sum).toLocaleString()}
+            : Math.floor(total.sum).toLocaleString("ru-RU")}
         </Value>
       </Box>
     </Wrapper>

@@ -174,7 +174,7 @@ const TrendGraph = ({ columns, name }: { columns: any[]; name: string }) => {
         <Line
           dot={false}
           dataKey="value"
-          stroke="#66BBFF"
+          stroke="#7c9cff"
           strokeWidth={2}
           name={strings[`heading_${name}` as keyof Strings]}
         />

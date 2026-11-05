@@ -25,9 +25,11 @@ export const TitleContainer = styled.div`
 
 export const PercentContainer = styled.div`
   width: 100%;
-  height: 4px;
+  max-width: 120px;
+  height: 3px;
+  border-radius: 2px;
   position: absolute;
-  background-color: ${constants.colorMuted};
+  background-color: rgba(255, 255, 255, 0.07);
   align-self: flex-end;
   bottom: -6px;
   left: 0;
@@ -35,6 +37,7 @@ export const PercentContainer = styled.div`
 
   & > div {
     height: 100%;
+    border-radius: 2px;
   }
 `;
 

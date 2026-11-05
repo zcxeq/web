@@ -69,7 +69,7 @@ const MMRGraph = ({ columns }: { columns: any[] }) => {
           <Line
             dot={true}
             dataKey="rank_tier"
-            stroke="#66BBFF"
+            stroke="#7c9cff"
             strokeWidth={2}
             name={strings.th_rank}
           />

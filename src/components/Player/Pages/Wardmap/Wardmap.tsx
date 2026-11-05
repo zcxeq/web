@@ -22,8 +22,13 @@ const StyledContainer = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
+    & img,
+    & canvas {
+      border-radius: 12px;
+    }
+
     &:hover img {
-      box-shadow: 0px 0px 5px #fff;
+      box-shadow: 0 0 0 2px rgba(124, 156, 255, 0.6);
     }
   }
 
