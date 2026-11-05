@@ -40,14 +40,8 @@ const VerticalAlignDiv = styled.div`
 
 const TabContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  font-weight: ${constants.fontWeightNormal};
-  height: 100%;
-  justify-content: center;
-  margin: 0 12px;
-  text-align: center;
+  align-items: center;
   position: relative;
-  line-height: 1;
   white-space: nowrap;
 
   /* В личной сборке 7 коротких пунктов — помещаются и на ноутбуке */
@@ -73,20 +67,18 @@ const DropdownMenuItem = styled(MenuItem)`
 `;
 
 const ToolbarHeader = styled(Toolbar)`
+  position: sticky;
+  top: 0;
+  min-height: 56px !important;
   backdrop-filter: blur(16px);
   background-color: ${constants.colorHeaderToolbar};
-  box-shadow: 2px 2px 3px -2px rgb(0 0 0 / 23%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   width: 100%;
   z-index: 200;
 
   & a {
     font-size: 0.875rem;
     color: ${constants.primaryTextColor};
-
-    &:hover {
-      color: ${constants.primaryTextColor};
-      opacity: 0.6;
-    }
   }
 `;
 
@@ -120,15 +112,48 @@ const DrawerLink = styled(Link)`
 `;
 
 const LinkGroupLink = styled(Link)`
-  font-family: ${constants.fontFamilyFuturistic};
-  font-size: ${constants.fontSizeSmall} !important;
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px !important;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.62) !important;
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &:hover {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  &.active {
+    color: #fff !important;
+    background: rgba(124, 156, 255, 0.16);
+  }
 `;
 
-const LinkGroup = ({ navbarPages }: { navbarPages: any[] }) => (
-  <VerticalAlignToolbar>
+// Активный пункт: точное совпадение для главной, по префиксу для остальных
+const isActivePath = (pathname: string, to: string) =>
+  to === "/" ? pathname === "/" : pathname.startsWith(to);
+
+const LinkGroup = ({
+  navbarPages,
+  pathname,
+}: {
+  navbarPages: any[];
+  pathname: string;
+}) => (
+  <VerticalAlignToolbar style={{ gap: 2 }}>
     {navbarPages.map((page: any) => (
       <TabContainer key={page.key}>
-        <LinkGroupLink to={page.to}>{page.label}</LinkGroupLink>
+        <LinkGroupLink
+          to={page.to}
+          className={isActivePath(pathname, page.to) ? "active" : ""}
+        >
+          {page.label}
+        </LinkGroupLink>
         {Boolean(page.feature) && (
           <div
             style={{
@@ -184,7 +209,7 @@ const SettingsGroup = ({ children }: { children: React.ReactNode }) => {
 const MenuButtonWrapper = styled.div`
   margin-right: 12px;
 
-  @media only screen and (min-width: 1500px) {
+  @media only screen and (min-width: 1101px) {
     display: none;
   }
 `;
@@ -298,7 +323,12 @@ const Header = ({
       <ToolbarHeader disableGutters variant="dense">
         <VerticalAlignDiv>
           <LogoGroup onMenuClick={() => setMenuState(true)} />
-          {small && <LinkGroup navbarPages={navbarPages} />}
+          {small && (
+            <LinkGroup
+              navbarPages={navbarPages}
+              pathname={location?.pathname || "/"}
+            />
+          )}
         </VerticalAlignDiv>
         <div
           style={{

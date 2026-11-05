@@ -32,8 +32,50 @@ const Explorer = React.lazy(() => import("../Explorer/Explorer"));
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: { main: "#7c9cff" },
+    success: { main: "#3ecf8e" },
+    error: { main: "#f0616d" },
+    background: { default: "#090c12", paper: "#121722" },
+    divider: "rgba(255, 255, 255, 0.06)",
+  },
+  shape: { borderRadius: 8 },
+  typography: {
+    fontFamily: "Inter, Roboto, sans-serif",
   },
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        // MUI в тёмной теме подмешивает светлый градиент к Paper — убираем
+        root: { backgroundImage: "none" },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "rgba(255, 255, 255, 0.03)",
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "rgba(255, 255, 255, 0.1)",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "rgba(255, 255, 255, 0.22)",
+          },
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: "#1c2333",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
+          fontSize: 12,
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: { backgroundColor: "rgba(124, 156, 255, 0.16)" },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

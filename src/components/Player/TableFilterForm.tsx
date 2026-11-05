@@ -40,7 +40,7 @@ type TableFilterFormProps = {
 const PRIMARY_FIELDS = ["hero_id", "win", "date", "lobby_type", "game_mode"];
 
 const Panel = styled.div`
-  background: #141a28;
+  background: #121722;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   padding: 12px;

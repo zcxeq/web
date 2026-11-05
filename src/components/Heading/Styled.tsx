@@ -5,21 +5,26 @@ export const StyledDiv = styled.div`
   display: flex;
   align-items: center;
 
+  /* Заголовок страницы: крупный, без полосы на всю ширину */
   &.top-heading {
-    width: 100vw;
-    position: relative;
-    margin: 0px -50vw 0px -50vw;
-    left: 50%;
-    right: 50%;
-    padding: 15px 0px 15px 20px;
+    padding: 28px 0 8px;
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    align-items: baseline;
-    letter-spacing: 10px;
-    font-weight: bold;
-    background-color: ${constants.colorHeaderSection};
-    font-family: ${constants.fontFamilyFuturistic};
+    align-items: flex-start;
+    text-align: left;
+
+    .title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .subtitle {
+      margin-left: 0;
+      margin-top: 4px;
+      font-size: 13px;
+      text-transform: none !important;
+    }
   }
 
   .winner {
@@ -73,10 +78,11 @@ export const StyledDiv = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: ${constants.fontFamilyFuturistic};
-    font-size: ${constants.fontSizeCommon};
-    font-weight: 400;
-    letter-spacing: 0.002em;
+    font-family: Inter, Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.005em;
     line-height: 1.6;
 
     &::before {
@@ -87,9 +93,9 @@ export const StyledDiv = styled.div`
 
   .subtitle {
     margin-left: 8px;
-    font-family: ${constants.fontFamilyFuturistic};
+    font-family: Inter, Roboto, sans-serif;
     font-size: ${constants.fontSizeSmall};
-    color: ${constants.colorGreyMuted};
+    color: rgba(255, 255, 255, 0.45);
     letter-spacing: normal;
     font-weight: normal;
     overflow-wrap: normal;
@@ -122,11 +128,9 @@ export const StyledDiv = styled.div`
 `;
 
 export const TwoLineDiv = styled(StyledDiv)`
-  text-align: center;
   padding: 10px 0 15px;
 
   & span:last-child {
     display: block;
-    text-transform: lowercase;
   }
 `;

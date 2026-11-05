@@ -2,35 +2,40 @@ import { Tab, Tabs, Tooltip } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import constants from "../constants";
 import { withRouter } from "react-router-dom";
 
 const StyledMain = styled.main`
   position: relative;
-  margin: 0px 0px 30px 0px;
-  background-color: ${constants.colorHeaderSection};
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  padding-top: 25px;
+  margin: 0 0 24px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 `;
 
 const StyledTabs = styled(Tabs)`
-  justify-content: center;
+  min-height: 44px !important;
 
   & .MuiTabs-indicator {
-    background: ${constants.primaryLinkColor};
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #7c9cff, #3ecf8e);
   }
-  & .MuiTabs-scroller {
-    flex-grow: 0;
+  & .MuiTabs-scrollButtons.Mui-disabled {
+    opacity: 0.2;
   }
 `;
 
 const StyledTab = styled(Tab)`
   min-width: 0 !important;
+  min-height: 44px !important;
+  padding: 0 14px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  transition: color 0.15s;
+
+  &:hover {
+    color: #fff !important;
+  }
+  &.Mui-selected {
+    color: #fff !important;
+  }
 `;
 
 const TabTooltip = ({
@@ -78,6 +83,7 @@ const TabBar = ({
         value={tabValue}
         onChange={(e, newValue) => setTabValue(newValue)}
         variant="scrollable"
+        scrollButtons="auto"
         indicatorColor="primary"
       >
         {visibleTabs.map((tab, i) => (
@@ -93,10 +99,10 @@ const TabBar = ({
               label={tab.name}
               disabled={tab.disabled}
               sx={{
-                fontFamily: constants.fontFamilyFuturistic,
-                fontSize: constants.fontSizeSmall,
-                letterSpacing: "0.02em",
-                textTransform: "capitalize",
+                fontFamily: "Inter, Roboto, sans-serif",
+                fontSize: 13,
+                fontWeight: 600,
+                textTransform: "none",
               }}
             />
           </TabTooltip>

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 // Палитра дашборда (в духе Stratz)
 export const C = {
-  bg: "#0c101b",
-  card: "#141a28",
-  cardHover: "#1a2234",
+  bg: "#090c12",
+  card: "#121722",
+  cardHover: "#182030",
   border: "rgba(255,255,255,0.06)",
   text: "rgba(255,255,255,0.92)",
   muted: "rgba(255,255,255,0.5)",

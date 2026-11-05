@@ -1,17 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import constants from "../constants";
-import useStrings from "../../hooks/useStrings.hook";
 
+// Свой знак вместо <OpenDota/>: значок-монограмма + надпись
 const StyledLink = styled(Link)`
-  font-weight: ${constants.fontWeightMedium};
-  color: ${constants.textColorPrimary};
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff !important;
+  white-space: nowrap;
 
-  &:hover {
-    color: ${constants.textColorPrimary};
-    opacity: 0.6;
+  &:hover .mark {
+    transform: rotate(-6deg) scale(1.05);
+  }
+`;
+
+const Mark = styled.span`
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #7c9cff 0%, #3ecf8e 100%);
+  color: #0a0d14;
+  font:
+    800 13px/1 Inter,
+    Roboto,
+    sans-serif;
+  letter-spacing: -0.04em;
+  box-shadow: 0 4px 18px rgba(124, 156, 255, 0.35);
+  transition: transform 0.2s;
+`;
+
+const Word = styled.span`
+  font:
+    800 16px/1 Inter,
+    Roboto,
+    sans-serif;
+  letter-spacing: -0.02em;
+
+  b {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
   }
 `;
 
@@ -20,25 +50,13 @@ interface AppLogoProps {
   onClick?: () => void;
 }
 
-const AppLogo = ({ size, onClick }: AppLogoProps) => {
-  const strings = useStrings();
-  return (
-    <StyledLink
-      aria-label="Go to the Open Dota homepage"
-      to="/"
-      onClick={onClick}
-    >
-      <span
-        style={{
-          fontFamily: constants.fontFamilyFuturistic,
-          fontSize: size,
-          whiteSpace: "nowrap",
-        }}
-      >
-        {strings.app_name && `<${strings.app_name}/>`}
-      </span>
-    </StyledLink>
-  );
-};
+const AppLogo = ({ onClick }: AppLogoProps) => (
+  <StyledLink aria-label="На главную" to="/" onClick={onClick}>
+    <Mark className="mark">MX</Mark>
+    <Word>
+      dota<b>·stats</b>
+    </Word>
+  </StyledLink>
+);
 
 export default AppLogo;

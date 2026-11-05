@@ -35,9 +35,9 @@
   --od-primary-text-color: rgba(255, 255, 255, 0.87);
   --od-text-color-secondary: rgba(255, 255, 255, 0.6);
   --od-secondary-text-color: rgba(255, 255, 255, 0.6);
-  --od-primary-surface-color: #161c2c;
-  --od-secondary-surface-color: #1c2335;
-  --od-table-header-surface-color: #1a2133;
+  --od-primary-surface-color: #121722;
+  --od-secondary-surface-color: #171d2a;
+  --od-table-header-surface-color: #151b27;
   --od-table-row-odd-surface-color: rgba(255, 255, 255, .019);
   --od-table-row-even-surface-color: rgba(0, 0, 0, .019);
   --od-color-immortal: rgba(17,17,35,0.65);
@@ -70,11 +70,11 @@
   --od-color-box-blue: rgba(71, 114, 179, 0.05);
   --od-color-graph-yellow: rgb(223,217,94);
   --od-color-graph-blue: rgb(192,217,220);
-  --od-color-header-section: #121827;
-  --od-color-header-toolbar: #101522;
+  --od-color-header-section: #0d1119;
+  --od-color-header-toolbar: rgba(9, 12, 18, 0.82);
   --od-slider-ticks-color: #757575;
   --od-slider-ticks-color-active: #337AB7;
-  --od-divider-color: rgba(255,255,255,0.07);
+  --od-divider-color: rgba(255,255,255,0.06);
   --od-font-family: Inter, Roboto, sans-serif;
   --od-font-family-serif: Roboto Serif;
   --od-table-font-family: Inter, Roboto, sans-serif;

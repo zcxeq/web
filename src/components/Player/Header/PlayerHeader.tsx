@@ -11,29 +11,35 @@ import constants from "../../constants";
 import useStrings from "../../../hooks/useStrings.hook";
 import { LoadingOverlayUpper30 } from "../../LoadingOverlay";
 
+// Шапка профиля — карточка с подсветкой, как на дашборде
 const Styled = styled.div`
-  width: 100vw;
-  margin: 0px -50vw;
   position: relative;
-  left: 50%;
-  right: 50%;
-  display: grid;
-  padding-top: 35px;
-  background-color: ${constants.colorHeaderSection};
-  grid-template-columns: 1fr minmax(min-content, ${constants.appWidth}px) 1fr;
+  overflow: hidden;
+  margin-top: 16px;
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(124, 156, 255, 0.2), transparent 55%),
+    radial-gradient(ellipse at 0% 100%, rgba(62, 207, 142, 0.08), transparent 50%),
+    ${constants.primarySurfaceColor};
+
+  @media only screen and (max-width: 768px) {
+    padding: 16px;
+  }
 
   .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 10px;
-    grid-column: 2;
   }
 
   .playerName {
-    font-family: ${constants.fontFamilyFuturistic};
-    color: rgba(245, 245, 245, 0.870588);
+    font-family: Inter, Roboto, sans-serif;
+    font-weight: 800;
+    color: #fff;
     font-size: 28px;
+    letter-spacing: -0.01em;
     text-align: center;
   }
 

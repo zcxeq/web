@@ -23,48 +23,34 @@ export const StyledBody = styled.div<{
         : ""}
 
     thead {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
 
       & tr {
-        background: rgba(46, 160, 214, 0.26);
-        background: -moz-linear-gradient(
-          90deg,
-          rgba(20, 255, 212, 0.09) 2%,
-          rgba(46, 160, 214, 0.26) 27%,
-          rgba(5, 181, 249, 0.04) 80%
-        );
-        background: -webkit-linear-gradient(
-          90deg,
-          rgba(20, 255, 212, 0.09) 2%,
-          rgba(46, 160, 214, 0.26) 27%,
-          rgba(5, 181, 249, 0.04) 80%
-        );
-        background: linear-gradient(
-          90deg,
-          rgba(20, 255, 212, 0.09) 2%,
-          rgba(46, 160, 214, 0.26) 27%,
-          rgba(5, 181, 249, 0.04) 80%
-        );
-
-        /* Safari */
-        @media not all and (min-resolution: 0.001dpcm) {
-          @supports (-webkit-appearance: none) {
-            background: rgba(46, 160, 214, 0.26);
-          }
-        }
+        background: ${constants.tableHeaderSurfaceColor};
       }
     }
 
     tr {
       &:not(:last-child) {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.045) !important;
+      }
+    }
+
+    & tbody tr {
+      transition: background 0.12s;
+
+      &:hover {
+        background: rgba(124, 156, 255, 0.06);
       }
     }
 
     & th {
       position: relative;
-      font-family: ${constants.fontFamilyFuturistic};
-      font-size: ${constants.fontSizeSmall};
+      font-family: Inter, Roboto, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.5);
 
       svg {
         position: absolute;
@@ -105,11 +91,11 @@ export const StyledBody = styled.div<{
       overflow: visible !important;
 
       &:first-child {
-        padding-left: 24px !important;
+        padding-left: 18px !important;
       }
 
       &:last-child {
-        padding-right: 24px !important;
+        padding-right: 18px !important;
       }
     }
   }
@@ -117,8 +103,9 @@ export const StyledBody = styled.div<{
 
   .innerContainer {
     margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    background: ${constants.primarySurfaceColor};
   }
 
   .innerContainer {
@@ -244,6 +231,6 @@ export const StyledHeaderCell = styled.div`
   justify-content: space-between;
   text-align: center;
   text-transform: uppercase;
-  color: ${constants.primaryTextColor} !important;
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-weight: 700;
 `;

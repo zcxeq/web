@@ -9,6 +9,7 @@ import TabBar from "../TabBar/TabBar";
 import Hero from "../Hero/Hero";
 import { sum, abbreviateNumber } from "../../utility";
 import { HeroesTab, rankColumns } from "./rankColumns";
+import HeroGrid from "./HeroGrid";
 
 type HeroesProps = {
   dispatchHeroStats: Function;
@@ -24,7 +25,31 @@ type HeroesProps = {
   strings: Strings;
 };
 
-class HeroesPage extends React.Component<HeroesProps> {
+type HeroesView = "cards" | "table";
+
+// Запоминаем выбранный вид; localStorage может быть недоступен — тогда просто карточки
+const readView = (): HeroesView => {
+  try {
+    return window.localStorage.getItem("heroesView") === "table"
+      ? "table"
+      : "cards";
+  } catch {
+    return "cards";
+  }
+};
+
+class HeroesPage extends React.Component<HeroesProps, { view: HeroesView }> {
+  state = { view: readView() };
+
+  setView = (view: HeroesView) => {
+    this.setState({ view });
+    try {
+      window.localStorage.setItem("heroesView", view);
+    } catch {
+      // ничего страшного, просто не запомним
+    }
+  };
+
   componentDidMount() {
     this.props.dispatchHeroStats();
     this.props.onGetProPlayers();
@@ -54,11 +79,20 @@ class HeroesPage extends React.Component<HeroesProps> {
       name,
       key,
       content: (data: any, _columns: any[], loading: boolean) => (
-        <Table
+        <HeroGrid
+          key={key}
           data={data}
-          columns={_columns}
-          loading={loading}
-          loadingText="Loading heroes from professional matches..."
+          tab={key}
+          view={this.state.view}
+          onViewChange={this.setView}
+          table={
+            <Table
+              data={data}
+              columns={_columns}
+              loading={loading}
+              loadingText="Загружаю героев…"
+            />
+          }
         />
       ),
       route: `/heroes/${key}`,
